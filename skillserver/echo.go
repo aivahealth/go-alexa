@@ -63,6 +63,7 @@ func NewEchoResponse() *EchoResponse {
 		Version: "1.0",
 		Response: EchoRespBody{
 			ShouldEndSession: true,
+			Directives:       []Directive{},
 		},
 		SessionAttributes: make(map[string]interface{}),
 	}
@@ -165,6 +166,57 @@ func (this *EchoResponse) String() ([]byte, error) {
 	return jsonStr, nil
 }
 
+type AudioPlayerPlayBehavior string
+
+const (
+	ReplaceAll      AudioPlayerPlayBehavior = "REPLACE_ALL"
+	Enqueue         AudioPlayerPlayBehavior = "ENQUEUE"
+	ReplaceEnqueued AudioPlayerPlayBehavior = "REPLACE_ENQUEUED"
+)
+
+func (this *EchoResponse) AudioPlayerPlay(
+	behavior AudioPlayerPlayBehavior, streamUrl, token, prevToken string, offsetMs int,
+) *EchoResponse {
+	directive := map[string]interface{}{
+		"type":         "AudioPlayer.Play",
+		"playBehavior": behavior,
+		"audioItem": map[string]interface{}{
+			"stream": map[string]interface{}{
+				"url":                   streamUrl,
+				"token":                 token,
+				"expectedPreviousToken": prevToken,
+				"offsetInMilliseconds":  offsetMs,
+			},
+		},
+	}
+	this.Response.Directives = append(this.Response.Directives, directive)
+	return this
+}
+
+func (this *EchoResponse) AudioPlayerStop() *EchoResponse {
+	directive := map[string]interface{}{
+		"type": "AudioPlayer.Stop",
+	}
+	this.Response.Directives = append(this.Response.Directives, directive)
+	return this
+}
+
+type AudioPlayerClearBehavior string
+
+const (
+	ClearEnqueued AudioPlayerClearBehavior = "CLEAR_ENQUEUED"
+	ClearAll      AudioPlayerClearBehavior = "CLEAR_ALL"
+)
+
+func (this *EchoResponse) AudioPlayerClear(clearBehavior AudioPlayerClearBehavior) *EchoResponse {
+	directive := map[string]interface{}{
+		"type":          "AudioPlayer.Clear",
+		"clearBehavior": clearBehavior,
+	}
+	this.Response.Directives = append(this.Response.Directives, directive)
+	return this
+}
+
 // Request Types
 
 type EchoRequest struct {
@@ -229,7 +281,10 @@ type EchoRespBody struct {
 	Card             *EchoRespPayload `json:"card,omitempty"`
 	Reprompt         *EchoReprompt    `json:"reprompt,omitempty"` // Pointer so it's dropped if empty in JSON response.
 	ShouldEndSession bool             `json:"shouldEndSession"`
+	Directives       []Directive      `json:"directives"`
 }
+
+type Directive map[string]interface{} // Shape differs wildly
 
 type EchoReprompt struct {
 	OutputSpeech EchoRespPayload `json:"outputSpeech,omitempty"`
