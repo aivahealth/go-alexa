@@ -175,18 +175,21 @@ const (
 )
 
 func (this *EchoResponse) AudioPlayerPlay(
-	behavior AudioPlayerPlayBehavior, streamUrl, token, prevToken string, offsetMs int,
+	behavior AudioPlayerPlayBehavior, streamUrl, token string, prevToken *string, offsetMs int,
 ) *EchoResponse {
+	streamObj := map[string]interface{}{
+		"url":                  streamUrl,
+		"token":                token,
+		"offsetInMilliseconds": offsetMs,
+	}
+	if prevToken != nil {
+		streamObj["expectedPreviousToken"] = *prevToken
+	}
 	directive := map[string]interface{}{
 		"type":         "AudioPlayer.Play",
 		"playBehavior": behavior,
 		"audioItem": map[string]interface{}{
-			"stream": map[string]interface{}{
-				"url":                   streamUrl,
-				"token":                 token,
-				"expectedPreviousToken": prevToken,
-				"offsetInMilliseconds":  offsetMs,
-			},
+			"stream": streamObj,
 		},
 	}
 	this.Response.Directives = append(this.Response.Directives, directive)
