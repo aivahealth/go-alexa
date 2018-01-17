@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/kennygrant/sanitize"
-	alexa "github.com/mikeflynn/go-alexa/skillserver"
+	alexa "github.com/aivahealth/go-alexa/skillserver"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

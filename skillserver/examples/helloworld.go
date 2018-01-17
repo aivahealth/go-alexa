@@ -1,7 +1,7 @@
 package main
 
 import (
-	alexa "github.com/mikeflynn/go-alexa/skillserver"
+	alexa "github.com/aivahealth/go-alexa/skillserver"
 )
 
 var Applications = map[string]interface{}{
