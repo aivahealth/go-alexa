@@ -30,7 +30,12 @@ func (this *EchoRequest) GetSessionID() string {
 }
 
 func (this *EchoRequest) GetUserID() string {
-	return this.Session.User.UserID
+	// If there's no session, the userid is present in the context/system object.
+	uid := this.Session.User.UserID
+	if uid == "" {
+		uid = this.Context.System.User.UserId
+	}
+	return uid
 }
 
 func (this *EchoRequest) GetRequestType() string {
@@ -250,6 +255,9 @@ type EchoContext struct {
 		Application struct {
 			ApplicationID string `json:"applicationId,omitempty"`
 		} `json:"application,omitempty"`
+		User struct {
+			UserId string `json:"userId,omitempty"`
+		} `json:"user,omitempty"`
 	} `json:"System,omitempty"`
 }
 
