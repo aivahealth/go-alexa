@@ -209,16 +209,16 @@ func (this *EchoResponse) AudioPlayerStop() *EchoResponse {
 	return this
 }
 
-type AudioPlayerClearBehavior string
+type AudioPlayerClearQueueBehavior string
 
 const (
-	ClearEnqueued AudioPlayerClearBehavior = "CLEAR_ENQUEUED"
-	ClearAll      AudioPlayerClearBehavior = "CLEAR_ALL"
+	ClearEnqueued AudioPlayerClearQueueBehavior = "CLEAR_ENQUEUED"
+	ClearAll      AudioPlayerClearQueueBehavior = "CLEAR_ALL"
 )
 
-func (this *EchoResponse) AudioPlayerClear(clearBehavior AudioPlayerClearBehavior) *EchoResponse {
+func (this *EchoResponse) AudioPlayerClearQueue(clearBehavior AudioPlayerClearQueueBehavior) *EchoResponse {
 	directive := map[string]interface{}{
-		"type":          "AudioPlayer.Clear",
+		"type":          "AudioPlayer.ClearQueue",
 		"clearBehavior": clearBehavior,
 	}
 	this.Response.Directives = append(this.Response.Directives, directive)
