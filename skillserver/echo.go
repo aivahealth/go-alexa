@@ -64,10 +64,11 @@ func (this *EchoRequest) AllSlots() map[string]EchoSlot {
 
 // Response Functions
 func NewEchoResponse() *EchoResponse {
+	trueBool := true
 	er := &EchoResponse{
 		Version: "1.0",
 		Response: EchoRespBody{
-			ShouldEndSession: true,
+			ShouldEndSession: &trueBool,
 			Directives:       []Directive{},
 		},
 		SessionAttributes: make(map[string]interface{}),
@@ -157,7 +158,7 @@ func (this *EchoResponse) RepromptSSML(text string) *EchoResponse {
 }
 
 func (this *EchoResponse) EndSession(flag bool) *EchoResponse {
-	this.Response.ShouldEndSession = flag
+	this.Response.ShouldEndSession = &flag
 
 	return this
 }
@@ -314,8 +315,8 @@ type EchoResponse struct {
 type EchoRespBody struct {
 	OutputSpeech     *EchoRespPayload `json:"outputSpeech,omitempty"`
 	Card             *EchoRespPayload `json:"card,omitempty"`
-	Reprompt         *EchoReprompt    `json:"reprompt,omitempty"` // Pointer so it's dropped if empty in JSON response.
-	ShouldEndSession bool             `json:"shouldEndSession"`
+	Reprompt         *EchoReprompt    `json:"reprompt,omitempty"`         // Pointer so it's dropped if empty in JSON response.
+	ShouldEndSession *bool            `json:"shouldEndSession,omitempty"` // Same
 	Directives       []Directive      `json:"directives"`
 }
 
