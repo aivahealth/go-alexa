@@ -171,6 +171,8 @@ func (this *EchoResponse) String() ([]byte, error) {
 	return jsonStr, nil
 }
 
+// AudioPlayer interface
+
 type AudioPlayerPlayBehavior string
 
 const (
@@ -220,6 +222,28 @@ func (this *EchoResponse) AudioPlayerClearQueue(clearBehavior AudioPlayerClearQu
 	directive := map[string]interface{}{
 		"type":          "AudioPlayer.ClearQueue",
 		"clearBehavior": clearBehavior,
+	}
+	this.Response.Directives = append(this.Response.Directives, directive)
+	return this
+}
+
+// VideoApp interface
+
+func (this *EchoResponse) VideoAppLaunch(
+	streamUrl, title, subtitle string,
+) *EchoResponse {
+	videoItemObj := map[string]interface{}{
+		"source": streamUrl,
+	}
+	if title != "" || subtitle != "" {
+		videoItemObj["metadata"] = map[string]interface{}{
+			"title":    title,
+			"subtitle": subtitle,
+		}
+	}
+	directive := map[string]interface{}{
+		"type":      "VideoApp.Launch",
+		"videoItem": videoItemObj,
 	}
 	this.Response.Directives = append(this.Response.Directives, directive)
 	return this
