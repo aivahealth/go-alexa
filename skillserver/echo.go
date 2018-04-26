@@ -257,6 +257,7 @@ type EchoRequest struct {
 	Session EchoSession `json:"session"`
 	Request EchoReqBody `json:"request"`
 	Context EchoContext `json:"context"`
+	Message string      `json:"message"`
 }
 
 type EchoSession struct {
