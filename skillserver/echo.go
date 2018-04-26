@@ -253,11 +253,11 @@ func (this *EchoResponse) VideoAppLaunch(
 // Request Types
 
 type EchoRequest struct {
-	Version string      `json:"version"`
-	Session EchoSession `json:"session"`
-	Request EchoReqBody `json:"request"`
-	Context EchoContext `json:"context"`
-	Message string      `json:"message"`
+	Version string            `json:"version"`
+	Session EchoSession       `json:"session"`
+	Request EchoReqBody       `json:"request"`
+	Context EchoContext       `json:"context"`
+	Message map[string]string `json:"message"`
 }
 
 type EchoSession struct {
