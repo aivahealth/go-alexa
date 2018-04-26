@@ -274,14 +274,19 @@ type EchoSession struct {
 
 type EchoContext struct {
 	System struct {
-		Device struct {
+		ApiEndpoint    string `json:"apiEndpoint,omitempty"`
+		ApiAccessToken string `json:"apiAccessToken,omitempty"`
+		Device         struct {
 			DeviceId string `json:"deviceId,omitempty"`
 		} `json:"device,omitempty"`
 		Application struct {
 			ApplicationID string `json:"applicationId,omitempty"`
 		} `json:"application,omitempty"`
 		User struct {
-			UserId string `json:"userId,omitempty"`
+			UserId      string `json:"userId,omitempty"`
+			Permissions struct {
+				ConsentToken string `json:"consentToken,omitempty"`
+			} `json:"permissions,omitempty"`
 		} `json:"user,omitempty"`
 	} `json:"System,omitempty"`
 }
