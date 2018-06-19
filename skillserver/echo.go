@@ -319,12 +319,31 @@ type EchoResponse struct {
 }
 
 type EchoRespBody struct {
-	OutputSpeech     *EchoRespPayload `json:"outputSpeech,omitempty"`
-	Card             *EchoRespPayload `json:"card,omitempty"`
-	Reprompt         *EchoReprompt    `json:"reprompt,omitempty"`         // Pointer so it's dropped if empty in JSON response.
-	ShouldEndSession *bool            `json:"shouldEndSession,omitempty"` // Same
-	Directives       []Directive      `json:"directives"`
+	OutputSpeech     *EchoRespPayload         `json:"outputSpeech,omitempty"`
+	Card             *EchoRespPayload         `json:"card,omitempty"`
+	Reprompt         *EchoReprompt            `json:"reprompt,omitempty"`         // Pointer so it's dropped if empty in JSON response.
+	ShouldEndSession *bool                    `json:"shouldEndSession,omitempty"` // Same
+	Directives       []Directive              `json:"directives"`
+	CanFulfillIntent *CanFulfillIntentPayload `json:"canFulfillIntent,omitempty"`
 }
+
+type CanFulfillIntentPayload struct {
+	CanFulfill CanFulfillIntentAnswer          `json:"canFulfill"`
+	Slots      map[string]CanFulfillIntentSlot `json:"slots,omitempty"`
+}
+
+type CanFulfillIntentSlot struct {
+	CanUnderstand CanFulfillIntentAnswer `json:"canUnderstand"`
+	CanFulfill    CanFulfillIntentAnswer `json:"canFulfill"`
+}
+
+type CanFulfillIntentAnswer string
+
+const (
+	CanFulfillIntentAnswerYes   CanFulfillIntentAnswer = "YES"
+	CanFulfillIntentAnswerNo                           = "NO"
+	CanFulfillIntentAnswerMaybe                        = "MAYBE"
+)
 
 type Directive map[string]interface{} // Shape differs wildly
 
