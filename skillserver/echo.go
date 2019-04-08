@@ -298,6 +298,7 @@ type EchoReqBody struct {
 	Intent    EchoIntent        `json:"intent,omitempty"`
 	Reason    string            `json:"reason,omitempty"`
 	Message   map[string]string `json:"message"`
+	Locale    string            `json:"locale"`
 }
 
 type EchoIntent struct {
