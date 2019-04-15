@@ -283,6 +283,7 @@ type EchoContext struct {
 			ApplicationID string `json:"applicationId,omitempty"`
 		} `json:"application,omitempty"`
 		User struct {
+			AccessToken string `json:"accessToken,omitempty"`
 			UserId      string `json:"userId,omitempty"`
 			Permissions struct {
 				ConsentToken string `json:"consentToken,omitempty"`
