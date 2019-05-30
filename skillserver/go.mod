@@ -1,4 +1,4 @@
-module github.com/aivahealth/go-alexa
+module github.com/aivahealth/go-alexa/skillserver
 
 go 1.12
 
