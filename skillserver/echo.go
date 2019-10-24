@@ -325,7 +325,7 @@ type EchoRespBody struct {
 	Card             *EchoRespPayload         `json:"card,omitempty"`
 	Reprompt         *EchoReprompt            `json:"reprompt,omitempty"`         // Pointer so it's dropped if empty in JSON response.
 	ShouldEndSession *bool                    `json:"shouldEndSession,omitempty"` // Same
-	Directives       []Directive              `json:"directives"`
+	Directives       []Directive              `json:"directives,omitempty"`
 	CanFulfillIntent *CanFulfillIntentPayload `json:"canFulfillIntent,omitempty"`
 }
 
