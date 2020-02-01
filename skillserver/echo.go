@@ -308,8 +308,27 @@ type EchoIntent struct {
 }
 
 type EchoSlot struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Name        string               `json:"name"`
+	Value       string               `json:"value"`
+	Resolutions *EchoSlotResolutions `json:"resolutions,omitempty"`
+}
+
+type EchoSlotResolutions struct {
+	ResolutionsPerAuthority []EchoSlotAuthority `json:"resolutionsPerAuthority,omitempty"`
+}
+
+type EchoSlotAuthority struct {
+	Authority string                             `json:"authority"`
+	Values    []EchoSlotAuthorityValueCollection `json:"values,omitempty"`
+}
+
+type EchoSlotAuthorityValueCollection struct {
+	Value *EchoSlotAuthorityValue `json:"value,omitempty"`
+}
+
+type EchoSlotAuthorityValue struct {
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }
 
 // Response Types
